@@ -2,7 +2,7 @@ import React from 'react';
 
 const PodcastDetailCard = ({ image, title, author, description }) => {
     return (
-        <div style={{ width: "250px" }} className='flex flex-col items-center border border-gray-300 rounded p-4 mb-4 bg-white shadow'>
+        <div style={{ width: "250px" }} className='flex flex-col h-fit items-center border border-gray-300 rounded p-4 mb-4 bg-white shadow'>
             <img src={image} alt={title} style={{ width: '200px', height: '200px' }} />
             <hr className="my-4 border-gray-300" />
 

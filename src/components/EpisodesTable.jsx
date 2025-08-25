@@ -10,6 +10,11 @@ const EpisodesTable = ({ episodes }) => {
         const seconds = (totalSeconds % 60).toString().padStart(2, "0");
         return `${minutes}:${seconds}`;
     };
+
+    const handleClickEpisode = (id) => {
+        console.log("Episode ID:", id)
+    }
+
     return (
         <div className="overflow-x-auto">
             <table className="min-w-full bg-white border border-gray-200 rounded-lg">
@@ -22,10 +27,9 @@ const EpisodesTable = ({ episodes }) => {
                 </thead>
                 <tbody>
                     {episodes.map((ep) => (
-                        <tr key={ep.id} className="hover:bg-gray-50">
-
+                        <tr key={ep.trackId} className="hover:bg-gray-50 cursor-pointer" onClick={()=>handleClickEpisode(ep.trackId)}>
                             <td className="px-4 py-2 border-b">{ep.trackName}</td>
-                            <td className="px-4 py-2 border-b">{ep.releaseDate}</td>
+                            <td className="px-4 py-2 border-b">{new Date(ep.releaseDate).toLocaleDateString()}</td>
                             <td className="px-4 py-2 border-b">{ep.trackTimeMillis ? formatDuration(ep.trackTimeMillis) : "N/A"}</td>
                         </tr>
                     ))}
