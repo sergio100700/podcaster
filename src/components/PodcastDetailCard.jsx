@@ -10,7 +10,7 @@ const PodcastDetailCard = ({ image, title, author, description, podcastId }) => 
     }
 
     return (
-        <div style={{ width: "250px" }} className='flex flex-col h-fit items-center border border-gray-300 rounded p-4 mb-4 bg-white shadow'>
+        <div style={{ width: "250px" }} className='flex flex-col h-fit items-center border border-gray-300 rounded p-4 mb-4 shadow'>
             <div className='cursor-pointer flex flex-col items-center transform transition-transform duration-200 hover:scale-105 active:scale-95'
                 onClick={handleRedirect}>
                 <img src={image} alt={title} style={{ width: '200px', height: '200px' }} />
@@ -19,7 +19,7 @@ const PodcastDetailCard = ({ image, title, author, description, podcastId }) => 
                 <h2 className='font-bold'>
                     {title}
                 </h2>
-                <p className='text-gray-700 italic'>by {author}</p>
+                <p className='text-gray-700 dark:text-gray-400 italic'>by {author}</p>
                 <hr className="w-full my-4 border border-gray-300" />
             </div>
             <strong>Description:</strong>

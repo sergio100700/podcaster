@@ -64,7 +64,7 @@ function EpisodeDetail() {
             </div>
 
 
-            <div className='flex flex-col p-6 gap-2 h-fit items-center border border-gray-300 rounded mb-4 bg-white shadow'>
+            <div className='flex flex-col p-6 gap-2 h-fit items-center border border-gray-300 rounded mb-4 shadow'>
                 <h2 className='font-bold text-2xl'>{episode?.trackName}</h2>
                 <p className='text-left'>{safeTextHtml(episode?.description)}</p>
                 <hr className="w-full my-4 border border-gray-300" />

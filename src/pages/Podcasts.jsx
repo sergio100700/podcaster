@@ -29,9 +29,29 @@ const Podcasts = () => {
         <input
           type="text"
           value={search}
-          placeholder='Filtrar podcasts...'
-          className='border border-gray-300 rounded px-2 py-1'
+          placeholder="Filtrar podcasts..."
           onChange={(e) => setSearch(e.target.value)}
+          className="w-1/3
+    rounded-lg
+    px-3
+    py-2
+    border
+    border-gray-300
+    bg-white
+    text-gray-900
+    placeholder-gray-400
+    shadow-sm
+    focus:outline-none
+    focus:ring-2
+    focus:ring-blue-500
+    focus:border-blue-500
+    transition
+    dark:bg-gray-800
+    dark:border-gray-600
+    dark:text-gray-100
+    dark:placeholder-gray-400
+    dark:focus:ring-blue-400
+    dark:focus:border-blue-400"
         />
       </div>
 

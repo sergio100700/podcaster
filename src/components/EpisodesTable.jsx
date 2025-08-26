@@ -20,8 +20,8 @@ const EpisodesTable = ({ podcastId, episodes }) => {
 
     return (
         <div className="overflow-x-auto">
-            <table className="min-w-full bg-white border border-gray-200 rounded-lg">
-                <thead className="bg-gray-100">
+            <table className="min-w-full border border-gray-200 dark:border-gray-900 rounded-lg">
+                <thead className="bg-gray-100 dark:bg-gray-600">
                     <tr>
                         <th className="text-left px-4 py-2 border-b">Title</th>
                         <th className="text-left px-4 py-2 border-b">Date</th>
