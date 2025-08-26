@@ -8,6 +8,7 @@ Aplicación web desarrollada con **React + Vite + TailwindCSS** que permite busc
 
 - [Node.js](https://nodejs.org/) (v20 o superior recomendado)
 - npm (incluido con Node.js) o [yarn](https://yarnpkg.com/)
+- Servidor de cors para acceder a API ITunes https://cors-anywhere.herokuapp.com/corsdemo
 
 ---
 
