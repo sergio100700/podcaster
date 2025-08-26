@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const EpisodesTable = ({ episodes }) => {
+const EpisodesTable = ({ podcastId, episodes }) => {
+    const navigate = useNavigate();
+
     const formatDuration = (millis) => {
         if (!millis) return "00:00";
         const totalSeconds = Math.floor(millis / 1000);
@@ -12,7 +15,7 @@ const EpisodesTable = ({ episodes }) => {
     };
 
     const handleClickEpisode = (id) => {
-        console.log("Episode ID:", id)
+        navigate(`/podcast/${podcastId}/episode/${id}`)
     }
 
     return (
@@ -28,9 +31,9 @@ const EpisodesTable = ({ episodes }) => {
                 <tbody>
                     {episodes.map((ep) => (
                         <tr key={ep.trackId} className="hover:bg-gray-50 cursor-pointer" onClick={()=>handleClickEpisode(ep.trackId)}>
-                            <td className="px-4 py-2 border-b">{ep.trackName}</td>
-                            <td className="px-4 py-2 border-b">{new Date(ep.releaseDate).toLocaleDateString()}</td>
-                            <td className="px-4 py-2 border-b">{ep.trackTimeMillis ? formatDuration(ep.trackTimeMillis) : "N/A"}</td>
+                            <td className="px-4 py-2 border-b text-blue-500 text-left">{ep.trackName}</td>
+                            <td className="px-4 py-2 border-b text-left">{new Date(ep.releaseDate).toLocaleDateString()}</td>
+                            <td className="px-4 py-2 border-b text-right">{ep.trackTimeMillis ? formatDuration(ep.trackTimeMillis) : "N/A"}</td>
                         </tr>
                     ))}
                 </tbody>

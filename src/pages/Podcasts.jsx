@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PodcastCard from '../components/PodcastCard';
 import { usePodcasts } from '../hooks/usePodcasts';
+import { useLoading } from '../context/useLoading';
 
 const Podcasts = () => {
   const { podcasts, loading, error } = usePodcasts();
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
+  const { setLoading } = useLoading();
+
+
+  useEffect(() => {
+    setLoading(loading);
+  }, [loading, setLoading]);
 
   const filteredPodcasts = podcasts.filter((podcast) => {
     const nameMatch = podcast["im:name"].label.toLowerCase().includes(search.toLowerCase());
@@ -14,8 +21,6 @@ const Podcasts = () => {
     return nameMatch || artistMatch;
   });
 
-  if (loading) return <p>Cargando podcasts...</p>;
-  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div className='flex flex-col w-full'>
