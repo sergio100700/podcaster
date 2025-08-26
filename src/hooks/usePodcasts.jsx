@@ -20,8 +20,9 @@ export const usePodcasts = () => {
           setLoading(false);
           return;
         }
+        const corsProxy = 'https://cors-anywhere.herokuapp.com/';
 
-        const res = await fetch('https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json');
+        const res = await fetch(corsProxy + 'https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json');
         const data = await res.json();
         const entries = data.feed.entry || [];
 

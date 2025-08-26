@@ -31,9 +31,8 @@ function EpisodeDetail() {
         const foundEpisode = podcastDetail.results.find(ep => ep.trackId == episodeId);
         setEpisode(foundEpisode);
 
-        // Si hay URL de audio, la obtenemos mediante proxy CORS
         if (foundEpisode?.episodeUrl) {
-            const corsProxy = 'https://cors-anywhere.herokuapp.com/'; // o allorigins
+            const corsProxy = 'https://cors-anywhere.herokuapp.com/';
             fetch(corsProxy + foundEpisode.episodeUrl)
                 .then(res => res.blob())
                 .then(blob => {
