@@ -85,6 +85,6 @@ src/
 
 El contenido de `dist/` puede ser desplegado en cualquier servicio de hosting estático como:
 - [Vercel](https://vercel.com/)
-Puedes ver este proyecto en: 
+Puedes ver este proyecto en: https://podcaster-gamma-vert.vercel.app/
 ---
 
