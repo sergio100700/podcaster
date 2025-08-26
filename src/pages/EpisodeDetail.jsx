@@ -49,7 +49,7 @@ function EpisodeDetail() {
     if (loadingPodcasts || !podcast || !podcastDetail || loading) return <></>
 
     return (
-        <div className='flex flex-row w-fit gap-5'>
+        <div className='flex flex-row gap-5'>
             <div className='w-fit'>
                 {podcast && (
                     <PodcastDetailCard
@@ -63,7 +63,7 @@ function EpisodeDetail() {
             </div>
 
 
-            <div className='flex flex-col p-6 gap-2 h-fit items-center border border-gray-300 rounded mb-4 shadow'>
+            <div className='flex flex-col p-6 gap-2 h-fit w-full items-center border border-gray-300 rounded mb-4 shadow'>
                 <h2 className='font-bold text-2xl'>{episode?.trackName}</h2>
                 <p className='text-left'>{safeTextHtml(episode?.description)}</p>
                 <hr className="w-full my-4 border border-gray-300" />

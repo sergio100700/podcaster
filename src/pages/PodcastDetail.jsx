@@ -41,11 +41,12 @@ const PodcastDetail = () => {
         podcastId={podcastId}
       />
       <div className='w-full flex flex-col'>
-        <div className='border border-gray-300 rounded p-4'>
-          <h2 className='font-bold'>
+        <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+          <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
             Episodes: {podcastDetail.resultCount || 'N/A'}
           </h2>
         </div>
+
         <div>
           <EpisodesTable podcastId={podcastId} episodes={podcastDetail.results} />
         </div>
