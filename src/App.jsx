@@ -1,12 +1,14 @@
 import './App.css'
 import { Link, Route, Routes } from 'react-router-dom'
-import Podcasts from './pages/Podcasts'
-import PodcastDetail from './pages/PodcastDetail'
-import EpisodeDetail from './pages/EpisodeDetail'
 import { useLoading } from './context/useLoading'
 import Spinner from './components/Spinner'
 import { FaSun, FaMoon } from 'react-icons/fa';
 import { useDarkMode } from './context/useDarkMode'
+import { Suspense, lazy } from 'react'
+
+const Podcasts = lazy(() => import('./pages/Podcasts'))
+const PodcastDetail = lazy(() => import('./pages/PodcastDetail'))
+const EpisodeDetail = lazy(() => import('./pages/EpisodeDetail'))
 
 function App() {
   const { loading } = useLoading();
@@ -39,13 +41,14 @@ function App() {
         </div>
       </header>
 
-
       <main className="p-6">
-        <Routes>
-          <Route path="/" element={<Podcasts />} />
-          <Route path="/podcast/:podcastId" element={<PodcastDetail />} />
-          <Route path="/podcast/:podcastId/episode/:episodeId" element={<EpisodeDetail />} />
-        </Routes>
+        <Suspense fallback={<div className="text-center"><Spinner /></div>}>
+          <Routes>
+            <Route path="/" element={<Podcasts />} />
+            <Route path="/podcast/:podcastId" element={<PodcastDetail />} />
+            <Route path="/podcast/:podcastId/episode/:episodeId" element={<EpisodeDetail />} />
+          </Routes>
+        </Suspense>
       </main>
     </div>
   )
