@@ -1,21 +1,15 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PodcastCard from '../components/PodcastCard';
 import { usePodcasts } from '../hooks/usePodcasts';
-import { useLoading } from '../context/useLoading';
 
 const Podcasts = () => {
-  const { podcasts, loading, error } = usePodcasts();
+  const { podcasts, error } = usePodcasts();
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
-  const { setLoading } = useLoading();
-
-
-  useEffect(() => {
-    setLoading(loading);
-  }, [loading, setLoading]);
 
   const filteredPodcasts = useMemo(() => {
+    if (!podcasts) return [];
     return podcasts.filter((podcast) => {
       const nameMatch = podcast["im:name"].label.toLowerCase().includes(search.toLowerCase());
       const artistMatch = podcast["im:artist"].label.toLowerCase().includes(search.toLowerCase());
@@ -23,7 +17,14 @@ const Podcasts = () => {
     });
   }, [podcasts, search]);
 
-
+  if (error) {
+    return (
+      <div className="text-red-500 text-center">
+        <p>Error fetching podcasts. Please try again later.</p>
+        <p>{error.message}</p>
+      </div>
+    );
+  }
 
   return (
     <div className='flex flex-col w-full'>
@@ -32,9 +33,9 @@ const Podcasts = () => {
         <input
           type="text"
           value={search}
-          placeholder="Filtrar podcasts..."
+          placeholder="Filter podcasts..."
           onChange={(e) => setSearch(e.target.value)}
-          className="w-1/3
+          className="w-full sm:w-1/3
     rounded-lg
     px-3
     py-2
@@ -58,17 +59,23 @@ const Podcasts = () => {
         />
       </div>
 
-      <div className='grid grid-cols-4 gap-4'>
-        {filteredPodcasts.map((podcast, index) => (
-          <div key={index} className='p-2'>
-            <PodcastCard
-              author={podcast["im:artist"].label}
-              title={podcast["im:name"].label}
-              image={podcast["im:image"][2].label}
-              onClick={() => navigate(`/podcast/${podcast.id.attributes['im:id']}`)}
-            />
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+        {filteredPodcasts.length > 0 ? (
+          filteredPodcasts.map((podcast) => (
+            <div key={podcast.id.attributes['im:id']} className='p-2'>
+              <PodcastCard
+                author={podcast["im:artist"].label}
+                title={podcast["im:name"].label}
+                image={podcast["im:image"][2].label}
+                onClick={() => navigate(`/podcast/${podcast.id.attributes['im:id']}`)}
+              />
+            </div>
+          ))
+        ) : (
+          <div className="col-span-full text-center text-gray-500 dark:text-gray-400">
+            No podcasts found.
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

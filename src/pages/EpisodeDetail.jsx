@@ -1,24 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PodcastDetailCard from '../components/PodcastDetailCard';
 import { usePodcasts } from '../hooks/usePodcasts';
 import { usePodcastDetail } from '../hooks/usePodcastDetail';
 import { safeTextHtml } from '../utils/safeTextHtml';
-import { useLoading } from '../context/useLoading';
 import Spinner from '../components/Spinner';
 
 function EpisodeDetail() {
     const { podcastId, episodeId } = useParams();
     const [podcast, setPodcast] = useState(null);
     const [audioSrc, setAudioSrc] = useState(null);
-    const { podcasts, loading: loadingPodcasts } = usePodcasts();
-    const { podcastDetail, loading } = usePodcastDetail(podcastId);
+    const { podcasts } = usePodcasts();
+    const { podcastDetail } = usePodcastDetail(podcastId);
     const [episode, setEpisode] = useState(null);
-    const { setLoading } = useLoading();
-
-    useEffect(() => {
-        setLoading(loadingPodcasts || loading || !podcast || !podcastDetail);
-    }, [loadingPodcasts, loading, podcast, podcastDetail, setLoading]);
 
     useEffect(() => {
         if (!podcasts || podcasts.length === 0) return;
@@ -46,7 +40,7 @@ function EpisodeDetail() {
         }
     }, [podcastDetail, episodeId]);
 
-    if (loadingPodcasts || !podcast || !podcastDetail || loading) return <></>
+    if (!podcast || !podcastDetail) return <div className="text-center"><Spinner /></div>;
 
     return (
         <div className='flex flex-row gap-5'>
@@ -77,4 +71,12 @@ function EpisodeDetail() {
     );
 }
 
-export default EpisodeDetail;
+const EpisodeDetailWithSuspense = () => {
+    return (
+        <Suspense fallback={<div className="text-center"><Spinner /></div>}>
+            <EpisodeDetail />
+        </Suspense>
+    )
+}
+
+export default EpisodeDetailWithSuspense;

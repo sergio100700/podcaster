@@ -1,36 +1,31 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { Suspense, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import PodcastDetailCard from '../components/PodcastDetailCard';
 import { usePodcasts } from '../hooks/usePodcasts';
 import EpisodesTable from '../components/EpisodesTable';
 import { usePodcastDetail } from '../hooks/usePodcastDetail';
 import { safeTextHtml } from '../utils/safeTextHtml';
-import { useLoading } from '../context/useLoading';
+import Spinner from '../components/Spinner';
 
 const PodcastDetail = () => {
   const { podcastId } = useParams();
-  const [podcast, setPodcast] = useState(null);
-  const { podcasts, loading: loadingPodcasts, error: errorPodcasts } = usePodcasts();
-  const { podcastDetail, loading, error } = usePodcastDetail(podcastId);
-  const { setLoading } = useLoading();
+  const { podcasts } = usePodcasts();
+  const { podcastDetail } = usePodcastDetail(podcastId);
 
-  useEffect(() => {
-    setLoading(loadingPodcasts || !podcast || !podcastDetail);
-  }, [loadingPodcasts, podcast, podcastDetail, setLoading]);
-
-
-  useEffect(() => {
-    if (!podcasts || podcasts.length === 0) return;
-
-    const foundPodcast = podcasts.find(p => p.id.attributes['im:id'] === podcastId);
-    setPodcast(foundPodcast);
+  const podcast = useMemo(() => {
+    if (!podcasts || podcasts.length === 0) return null;
+    return podcasts.find(p => p.id.attributes['im:id'] === podcastId);
   }, [podcasts, podcastId]);
 
   const safeDesc = useMemo(() => {
     if (!podcast?.summary?.label) return '';
     return safeTextHtml(podcast.summary.label);
   }, [podcast?.summary?.label]);
-  if (loadingPodcasts || !podcast || !podcastDetail) return <></>
+
+  if (!podcast || !podcastDetail) {
+    return <div className="text-center"><Spinner /></div>;
+  }
+
   return (
     <div className='flex flex-row gap-8'>
       <PodcastDetailCard
@@ -55,4 +50,12 @@ const PodcastDetail = () => {
   );
 };
 
-export default PodcastDetail;
+const PodcastDetailWithSuspense = () => {
+  return (
+    <Suspense fallback={<div className="text-center"><Spinner /></div>}>
+      <PodcastDetail />
+    </Suspense>
+  )
+}
+
+export default PodcastDetailWithSuspense;
