@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PodcastCard from '../components/PodcastCard';
 import { usePodcasts } from '../hooks/usePodcasts';
@@ -15,11 +15,14 @@ const Podcasts = () => {
     setLoading(loading);
   }, [loading, setLoading]);
 
-  const filteredPodcasts = podcasts.filter((podcast) => {
-    const nameMatch = podcast["im:name"].label.toLowerCase().includes(search.toLowerCase());
-    const artistMatch = podcast["im:artist"].label.toLowerCase().includes(search.toLowerCase());
-    return nameMatch || artistMatch;
-  });
+  const filteredPodcasts = useMemo(() => {
+    return podcasts.filter((podcast) => {
+      const nameMatch = podcast["im:name"].label.toLowerCase().includes(search.toLowerCase());
+      const artistMatch = podcast["im:artist"].label.toLowerCase().includes(search.toLowerCase());
+      return nameMatch || artistMatch;
+    });
+  }, [podcasts, search]);
+
 
 
   return (
